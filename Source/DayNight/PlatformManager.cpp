@@ -1,27 +1,36 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "PlatformManager.h"
+#include "Components/BoxComponent.h"
 
-// Sets default values
-APlatformManager::APlatformManager()
-{
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+APlatformManager::APlatformManager() {
 	PrimaryActorTick.bCanEverTick = true;
 
+	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Box"));
+	TriggerBox->SetCollisionProfileName(TEXT("OverlapAll"));
+	TriggerBox->SetGenerateOverlapEvents(true);
+	RootComponent = TriggerBox;
+	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &APlatformManager::OnBeginOverlap);
+
+	TriggerMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Trigger Mesh"));
+	TriggerMesh->SetupAttachment(TriggerBox);
+
+	PlatformDestroyTime = 0.f;
 }
 
-// Called when the game starts or when spawned
-void APlatformManager::BeginPlay()
-{
+void APlatformManager::BeginPlay() {
 	Super::BeginPlay();
-	
 }
 
-// Called every frame
-void APlatformManager::Tick(float DeltaTime)
-{
+void APlatformManager::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
+	if(PlatformDestroyTime > 0) {
+		PlatformDestroyTime -= DeltaTime;
+
+		if(PlatformDestroyTime <= 0.f) Destroy();
+	}
 }
 
+void APlatformManager::OnBeginOverlap(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+	UE_LOG(LogTemp, Warning, TEXT("OAKY"));
+	if(CanBeDestroyed) PlatformDestroyTime = 2.f;
+}
