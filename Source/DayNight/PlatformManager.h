@@ -24,6 +24,8 @@ public:
 	void OnBeginOverlap(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 protected:
+	class AFoxMovement* Fox;
+
 	virtual void BeginPlay() override;
 
 private:

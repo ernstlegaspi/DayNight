@@ -20,8 +20,15 @@ protected:
 
 	class AFinishLineActor* FinishLine;
 
+	class AFoxMovement* Fox;
+
+	UPROPERTY(EditAnywhere)
+	bool IsDay;
+
 	UFUNCTION()
 	void OnAppleBeginOverlap(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherCmp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	void HideApple(bool Hide);
 
 	virtual void BeginPlay() override;
 

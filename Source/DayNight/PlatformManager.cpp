@@ -1,5 +1,7 @@
 #include "PlatformManager.h"
+#include "FoxMovement.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 APlatformManager::APlatformManager() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -18,6 +20,8 @@ APlatformManager::APlatformManager() {
 
 void APlatformManager::BeginPlay() {
 	Super::BeginPlay();
+
+	Fox = (AFoxMovement*)UGameplayStatics::GetActorOfClass(GetWorld(), AFoxMovement::StaticClass());
 }
 
 void APlatformManager::Tick(float DeltaTime) {
@@ -31,6 +35,5 @@ void APlatformManager::Tick(float DeltaTime) {
 }
 
 void APlatformManager::OnBeginOverlap(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-	UE_LOG(LogTemp, Warning, TEXT("OAKY"));
-	if(CanBeDestroyed) PlatformDestroyTime = 2.f;
+	if(*OtherActor->GetFName().ToString() == Fox->FoxName && CanBeDestroyed) PlatformDestroyTime = 2.f;
 }

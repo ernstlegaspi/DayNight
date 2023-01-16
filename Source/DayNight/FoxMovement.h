@@ -12,6 +12,8 @@ class DAYNIGHT_API AFoxMovement : public ACharacter {
 public:
 	AFoxMovement();
 
+	FString FoxName;
+
 protected:
 	UPROPERTY(EditAnywhere)
 	UCapsuleComponent* CapsuleTrigger;
@@ -25,13 +27,37 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	class UInputAction* JumpAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	class UInputAction* RKeyAction;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
 	UAnimMontage* FoxRun;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Fox")
+	AActor* DayActor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Fox")
+	AActor* PointLightActor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Fox")
+	TArray<AActor*> DayApples;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Fox")
+	TArray<AActor*> NightApples;
+
+	bool IsDay, IsChangeLightPressed;
+	float ChangeLightTime;
 
 	UFUNCTION()
 	void OnBeginOverlap(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	void Move(const FInputActionValue& Value);
+	
+	void ChangeCharacter(const FInputActionValue& Value);
+
+	void ChangeScenery(AActor* Actor1, AActor* Actor2);
+
+	void HideApple(AActor* Apple, bool Hide);
 
 	virtual void BeginPlay() override;
 
