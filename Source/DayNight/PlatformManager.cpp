@@ -35,5 +35,5 @@ void APlatformManager::Tick(float DeltaTime) {
 }
 
 void APlatformManager::OnBeginOverlap(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-	if(*OtherActor->GetFName().ToString() == Fox->FoxName && CanBeDestroyed) PlatformDestroyTime = 2.f;
+	if(*OtherActor->GetFName().ToString() == Fox->FoxName) if(CanBeDestroyed) PlatformDestroyTime = 2.f;
 }
