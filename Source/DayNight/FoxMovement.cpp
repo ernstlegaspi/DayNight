@@ -33,6 +33,14 @@ void AFoxMovement::BeginPlay() {
 			Subsystem->AddMappingContext(FoxMappingContext, 1);
 		}
 	}
+
+	if(UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance()) {
+		if(RunMontage) {
+			//AnimInstance->Montage_Play(RunMontage);
+			//AnimInstance->Montage_JumpToSection("Run");
+			ACharacter::PlayAnimMontage(RunMontage);
+		}
+	}
 }
 
 void AFoxMovement::Tick(float DeltaTime) {

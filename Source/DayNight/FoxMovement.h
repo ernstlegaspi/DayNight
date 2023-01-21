@@ -31,7 +31,7 @@ protected:
 	class UInputAction* RKeyAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
-	UAnimMontage* FoxRun;
+	class UAnimMontage* RunMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Fox")
 	AActor* DayActor;
